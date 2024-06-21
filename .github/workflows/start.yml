@@ -28,10 +28,15 @@ jobs:
         uses: webfactory/ssh-agent@v0.5.3
         with:
           ssh-private-key: ${{ secrets.KEY }}
+      - name: Set permissions on the server
+        run: |
+          ssh -o StrictHostKeyChecking=no sabit@@51.250.100.39 << 'EOF'
+          sudo chmod 777 /  # Очень осторожно! Этот пример делает корневой каталог доступным для всех.
 
       - name: Copy files via SSH
         run: |
           scp -r -o StrictHostKeyChecking=no ./main.py sabit@51.250.100.39:/
+      
 
       - name: Execute remote commands via SSH
         run: |
