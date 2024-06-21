@@ -6,7 +6,7 @@ on:
 
 
 jobs:
-  build:
+  BuildAppAndPublishIt:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -16,3 +16,26 @@ jobs:
       run: docker build -t sabito27/gachi-generator:$GITHUB_RUN_ID -f Dockerfile .
     - name: Push docker
       run: docker push sabito27/gachi-generator:$GITHUB_RUN_ID
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.KEY }}
+
+      - name: Copy files via SSH
+        run: |
+          scp -r -o StrictHostKeyChecking=no ./ sabit@62.84.121.2:/
+
+      - name: Execute remote commands via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no sabit@62.84.121.2 << 'EOF'
+          pip install -r requirements.txt
+          python3 main.py
+          EOF
