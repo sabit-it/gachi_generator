@@ -50,5 +50,5 @@ jobs:
       - name: Execute remote commands via SSH
         run: |
           ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
-          nohup python3 main.py & exit 0  # Убедиться, что команда не блокирует выполнение.
+          python3 main.py & exit 0  # Убедиться, что команда не блокирует выполнение.
           EOF
