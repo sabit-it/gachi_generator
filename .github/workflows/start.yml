@@ -31,11 +31,11 @@ jobs:
 
       - name: Copy files via SSH
         run: |
-          scp -r -o StrictHostKeyChecking=no ./ sabit@62.84.121.2:/
+          scp -r -o StrictHostKeyChecking=no ./ sabit@51.250.100.39:/
 
       - name: Execute remote commands via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no sabit@62.84.121.2 << 'EOF'
+          ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
           pip install -r requirements.txt
           python3 main.py
           EOF
