@@ -42,6 +42,11 @@ jobs:
             ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
             pip install -r requirements.txt
             EOF
+      - name: Kill all running Python3 processes
+        run: |
+          ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
+          sudo killall python3 || true  # Игнорировать ошибку, если нет работающих процессов
+          EOF
       - name: Execute remote commands via SSH
         run: |
           ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
