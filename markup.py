@@ -4,4 +4,3 @@ mainMenu = ReplyKeyboardMarkup(
     resize_keyboard=True,
     keyboard=[[KeyboardButton(text="Generate Gachi")]]
 )
-
