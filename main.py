@@ -9,7 +9,7 @@ import markup as nav
 
 
 load_dotenv()
-TOKEN = os.environ['TOKEN']
+TOKEN = "7057399024:AAF3gFcl_49UO_2bTWtoAjoaXvoqcHhOD04"
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
