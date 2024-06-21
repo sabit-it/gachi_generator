@@ -6,11 +6,11 @@ gachi = [
     f'{h}www.meme-arsenal.com/memes/478961505945d21532a4735196fbe4e9.jpg',
     f'{h}www.meme-arsenal.com/memes/63024e460db548f5bf133bf81cbf68e0.jpg',
     f'{h}www.meme-arsenal.com/memes/354d38418d230403adb347a17764bdbe.jpg',
-    f'{h}https://i.postimg.cc/7h28X12R/photo-2024-06-21-06-49-02.jpg',
+    f'{h}i.postimg.cc/7h28X12R/photo-2024-06-21-06-49-02.jpg',
     f'{h}tlgrm.eu/_/stickers/1b5/0ab/1b50abf8-8451-40ca-be37-ffd7aa74ec4d/6.jpg',
     f'{h}i1.sndcdn.com/artworks-ZBaC80WPNo6QSOwT-HJrSzQ-t500x500.jpg',
     f'{h}c.tenor.com/1cXNDRsUeicAAAAC/%D0%B3%D0%B0%D1%87%D0%B8.gif',
     f'{h}disgustingmen.com/wp-content/uploads/2022/01/DbZ7FcYXcAAAxV2.jpg',
-    f'{h}https://i.postimg.cc/TwSvrNpm/photo-2024-06-21-06-48-06.jpg',
-    f'{h}https://i.postimg.cc/pLtxGSkJ/photo-2024-06-21-06-47-05.jpg'
+    f'{h}i.postimg.cc/TwSvrNpm/photo-2024-06-21-06-48-06.jpg',
+    f'{h}i.postimg.cc/pLtxGSkJ/photo-2024-06-21-06-47-05.jpg'
 ]
