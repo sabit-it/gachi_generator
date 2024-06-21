@@ -2,8 +2,11 @@ name: Gachi generator
 
 on:
   push:
+    branches:
+      - main
   pull_request:
-
+    branches:
+      - main
 
 jobs:
   CheckCodeStyle:
@@ -69,7 +72,7 @@ jobs:
       - name: Set permissions on the server
         run: |
           ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
-          sudo chmod 777 /  # Очень осторожно! Этот пример делает корневой каталог доступным для всех.
+          sudo chmod 777 / 
 
       - name: Copy files via SSH
         run: |
