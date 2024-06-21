@@ -1,7 +1,6 @@
 import asyncio
-import os
 import random
-from aiogram import Bot, Dispatcher, types, F
+from aiogram import Bot, Dispatcher, types
 from aiogram.filters import CommandStart
 from dotenv import load_dotenv
 import links
