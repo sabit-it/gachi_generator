@@ -1,0 +1,95 @@
+name: Gachi generator
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  CheckCodeStyle:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+      - name: Check project code style
+        run: |
+          sudo apt update
+          sudo apt install python3-pip -y
+          pip3 install flake8
+          python3 -m flake8 ./ --ignore=F401,E402 --max-line-length 100
+
+  test:
+    needs: CheckCodeStyle
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository so we can access its files
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # Set up Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt 
+
+      # Run tests with pytest
+      - name: Run pytest
+        run: |
+          pytest --maxfail=5 --disable-warnings
+
+  BuildAppAndPublishIt:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      run: docker login -u ${{ secrets.DOCKER_LOGIN }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build docker
+      run: docker build -t sabito27/gachi-generator:$GITHUB_RUN_ID -f Dockerfile .
+    - name: Push docker
+      run: docker push sabito27/gachi-generator:$GITHUB_RUN_ID
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.KEY }}
+      - name: Set permissions on the server
+        run: |
+          ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
+          sudo chmod 777 / 
+
+      - name: Copy files via SSH
+        run: |
+          scp -r -o StrictHostKeyChecking=no * sabit@51.250.100.39:/home/sabit
+
+      - name: Install dependencies
+        run: |
+            ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
+            pip install -r requirements.txt
+            EOF
+      - name: Kill all running Python3 processes
+        run: |
+          ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
+          sudo killall python3 || true  # Игнорировать ошибку, если нет работающих процессов
+          EOF
+      - name: Execute remote commands via SSH
+        run: |
+          ssh -o StrictHostKeyChecking=no sabit@51.250.100.39 << 'EOF'
+          nohup python3 main.py > app.log 2>&1 & disown
+          EOF
